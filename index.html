@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Task Manager</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;   /* centers horizontally */
+      justify-content: center; /* centers vertically */
+      min-height: 100vh;     /* full height of screen */
+      font-family: Arial, sans-serif;
+    }
+
+    input, button {
+      margin: 5px;
+      padding: 8px 12px;
+      font-size: 14px;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      margin: 8px 0;
+    }
+
+    button {
+      margin-left: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Task Manager</h1>
+
+  <input type="text" id="taskInput" placeholder="Enter a task" onkeyup="toggleAddButton()">
+  <button id="addBtn" disabled>Add Task</button>
+
+  <p>Total Tasks: <span id="totalCount">0</span> | Completed: <span id="completedCount">0</span></p>
+
+  <ul id="taskList"></ul>
+
+  <script src="script.js"></script>
+</body>
+</html>
