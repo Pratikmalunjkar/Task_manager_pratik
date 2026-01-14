@@ -1,56 +1,65 @@
-// Attach event to Add button
-document.getElementById("addBtn").onclick = addTask;
+// Get elements 
+const addBtn = document.getElementById("addBtn");
+const input = document.getElementById("taskInput");
+const taskList = document.getElementById("taskList");
+
+// Add task when button clicked
+addBtn.onclick = addTask;
+
+// Enable / Disable Add button
+input.oninput = function () {
+  addBtn.disabled = input.value.trim() === "";
+};
 
 function addTask() {
-  let input = document.getElementById("taskInput");
-  let taskText = input.value.trim();
-
-  if (taskText === "") return;
+  if (input.value.trim() === "")
+  {
+     return;
+  }
 
   // Create list item
-  let li = document.createElement("li");
-  li.textContent = taskText;
+  const li = document.createElement("li");
+  li.innerText = input.value;
 
-  // Complete button
-  let completeBtn = document.createElement("button");
-  completeBtn.textContent = "✔";
-  completeBtn.onclick = function () {
+  // Done button
+  const doneBtn = document.createElement("button");
+  doneBtn.innerText = "Done";
+  doneBtn.onclick = function () {
     li.style.textDecoration = "line-through";
     updateCounts();
   };
 
   // Delete button
-  let deleteBtn = document.createElement("button");
-  deleteBtn.textContent = "✖";
+  const deleteBtn = document.createElement("button");
+  deleteBtn.innerText = "Delete";
   deleteBtn.onclick = function () {
     li.remove();
     updateCounts();
   };
 
-  // Add buttons to list item
-  li.appendChild(completeBtn);
+  // Add buttons to task
+  li.appendChild(doneBtn);
   li.appendChild(deleteBtn);
+  taskList.appendChild(li);
 
-  // Add list item to task list
-  document.getElementById("taskList").appendChild(li);
-
-  // Clear input field
+  // Clear input
   input.value = "";
-  toggleAddButton();
+  addBtn.disabled = true;
+
   updateCounts();
 }
 
-// Disable Add button when input empty
-function toggleAddButton() {
-  let input = document.getElementById("taskInput");
-  let addBtn = document.getElementById("addBtn");
-  addBtn.disabled = input.value.trim() === "";
-}
-
-// Update task counts
+// Update total & completed count
 function updateCounts() {
-  let tasks = document.querySelectorAll("#taskList li");
-  let completed = Array.from(tasks).filter(li => li.style.textDecoration === "line-through");
-  document.getElementById("totalCount").textContent = tasks.length;
-  document.getElementById("completedCount").textContent = completed.length;
+  const tasks = taskList.children;
+  let completed = 0;
+
+  for (let task of tasks) {
+    if (task.style.textDecoration === "line-through") {
+      completed ++;
+    }
+  }
+
+  document.getElementById("totalCount").innerText = tasks.length;
+  document.getElementById("completedCount").innerText = completed;
 }
